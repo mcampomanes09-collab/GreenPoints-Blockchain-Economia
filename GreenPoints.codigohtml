@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenPoints Protocol - Frontend Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+        }
+        .phone-container {
+            max-width: 412px;
+            height: 844px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4 text-slate-100">
+
+    <div class="mb-6 text-center">
+        <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400">
+            GreenPoints Protocol
+        </h1>
+        <p class="text-xs text-slate-400 mt-1">Simulador de Interfaz Ciudadana Web3 (LACNet)</p>
+        <span class="inline-block mt-2 px-3 py-1 text-xs font-semibold text-green-400 bg-green-950/50 rounded-full border border-green-500/20">
+            <i class="fa-solid fa-leaf mr-1"></i> Acción Cívica Sostenible Auditada
+        </span>
+    </div>
+
+    <div class="phone-container relative w-full rounded-[40px] border-8 border-slate-800 bg-slate-950 flex flex-col overflow-hidden">
+        
+        <div class="w-full px-6 pt-3 pb-2 flex justify-between items-center text-xs text-slate-400 font-medium z-10 bg-slate-950">
+            <span>19:30</span>
+            <div class="w-20 h-4 bg-black rounded-full absolute left-1/2 transform -translate-x-1/2 top-2"></div>
+            <div class="flex items-center space-x-1.5">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-three-quarters"></i>
+            </div>
+        </div>
+
+        <div class="flex-1 flex flex-col overflow-y-auto no-scrollbar relative p-5">
+
+            <div id="screen-login" class="flex-1 flex flex-col justify-between py-8">
+                <div class="text-center mt-12">
+                    <div class="inline-flex p-5 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-3xl border border-green-500/20 shadow-lg shadow-green-500/5 mb-6">
+                        <i class="fa-solid fa-seedling text-4xl text-green-400 animate-pulse"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold tracking-tight">GreenPoints</h2>
+                    <p class="text-slate-400 text-sm mt-2 max-w-xs mx-auto">
+                        Incentivos inmutables basados en blockchain para promover la participación ciudadana sostenible.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <button onclick="connectWallet()" class="w-full py-4 px-6 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-green-400 text-slate-950 font-bold rounded-2xl shadow-lg transition-all duration-300 transform active:scale-95 flex items-center justify-center space-x-3">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask Logo" class="w-6 h-6">
+                        <span>Conectar Billetera MetaMask</span>
+                    </button>
+                    <p class="text-[10px] text-center text-slate-500 leading-relaxed max-w-xs mx-auto">
+                        Al conectar tu wallet digital, se autentica tu identidad criptográfica en el nodo descentralizado de LACNet.
+                    </p>
+                </div>
+            </div>
+
+            <div id="screen-dashboard" class="hidden flex-1 flex flex-col space-y-5">
+                
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-green-500 to-emerald-500 flex items-center justify-center text-slate-950 font-bold">
+                            C
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-1">
+                                <span class="w-2 h-2 bg-green-400 rounded-full animate-ping"></span>
+                                <span class="text-xs text-green-400 font-semibold uppercase">Conectado</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 font-mono" id="wallet-address">0x71C...3a90</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 bg-slate-900 border border-slate-800 text-slate-400 rounded-lg text-[10px] font-mono">
+                        LACNet Testnet
+                    </span>
+                </div>
+
+                <div class="p-5 bg-gradient-to-br from-slate-900 to-slate-950 rounded-3xl border border-slate-800/80 shadow-md relative overflow-hidden">
+                    <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-green-500/5 rounded-full filter blur-xl"></div>
+                    <p class="text-[10px] text-slate-400 font-semibold tracking-wider uppercase">Registro de Mérito Cívico</p>
+                    <div class="flex items-baseline space-x-2 mt-2">
+                        <span class="text-4xl font-extrabold text-green-400 tracking-tight" id="eco-balance">350</span>
+                        <span class="text-sm font-bold text-slate-300">PTS</span>
+                    </div>
+                    <div class="h-[1px] bg-slate-800 my-4"></div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        Puntos de reputación no financieros asignados mediante auditoría on-chain transparente (consultarPuntos).
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800/60 text-center">
+                        <p class="text-[10px] text-slate-400 font-medium">Tus Eventos</p>
+                        <p class="text-xl font-bold mt-1 text-slate-100" id="user-actions">4 Actividades</p>
+                        <span class="text-[9px] text-slate-500 block mt-0.5">Participación Individual</span>
+                    </div>
+                    <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800/60 text-center">
+                        <p class="text-[10px] text-slate-400 font-medium">Meta Comunitaria</p>
+                        <p class="text-xl font-bold mt-1 text-green-400">Programa EDUCCA</p>
+                        <span class="text-[9px] text-slate-500 block mt-0.5">Alineación con MINAM</span>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-green-950/20 rounded-2xl border border-green-500/20 space-y-3">
+                    <div class="flex items-center space-x-2 text-xs font-semibold text-green-400">
+                        <i class="fa-solid fa-gavel"></i>
+                        <span>Acción del Administrador (otorgarPuntos)</span>
+                    </div>
+                    <p class="text-[10px] text-slate-400">
+                        Simula a un supervisor municipal validando una acción sostenible realizada por el ciudadano.
+                    </p>
+                    <div class="space-y-2">
+                        <select id="activity-select" class="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-green-500">
+                            <option value="1">ID 1: Entrega de Reciclaje Municipal (+50 PTS)</option>
+                            <option value="2">ID 2: Campaña de Limpieza de Playas (+100 PTS)</option>
+                            <option value="3">ID 3: Educación Ambiental EDUCCA (+150 PTS)</option>
+                        </select>
+                        <button onclick="simulateOtorgarPuntos()" class="w-full py-2 bg-green-500 hover:bg-green-400 text-slate-950 font-bold rounded-xl text-xs transition-all">
+                            Confirmar y Acuñar en Ledger
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-2 flex-1">
+                    <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Historial Inmutable de Transacciones</h3>
+                    <div class="space-y-2 h-36 overflow-y-auto no-scrollbar pr-1" id="ledger-feed">
+                        <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-900 flex justify-between items-center text-xs">
+                            <div class="flex items-center space-x-2">
+                                <span class="p-1.5 bg-green-500/10 text-green-400 rounded-lg">
+                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                </span>
+                                <div>
+                                    <p class="font-medium">Campaña Limpieza Playas</p>
+                                    <p class="text-[9px] text-slate-500">Muni. de Lima · Actividad ID: 2</p>
+                                </div>
+                            </div>
+                            <span class="font-bold text-green-400">+100 PTS</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-xl border border-slate-900 flex justify-between items-center text-xs">
+                            <div class="flex items-center space-x-2">
+                                <span class="p-1.5 bg-green-500/10 text-green-400 rounded-lg">
+                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                </span>
+                                <div>
+                                    <p class="font-medium">Entrega de Reciclaje</p>
+                                    <p class="text-[9px] text-slate-500">Muni. de Lima · Actividad ID: 1</p>
+                                </div>
+                            </div>
+                            <span class="font-bold text-green-400">+50 PTS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex justify-around border-t border-slate-900 text-slate-400 text-xs">
+                    <button class="flex flex-col items-center space-y-1 text-green-400">
+                        <i class="fa-solid fa-id-card text-lg"></i>
+                        <span class="text-[9px]">Mi Perfil</span>
+                    </button>
+                    <button onclick="goToMarket()" class="flex flex-col items-center space-y-1 hover:text-slate-200">
+                        <i class="fa-solid fa-gift text-lg"></i>
+                        <span class="text-[9px]">Incentivos</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="screen-market" class="hidden flex-1 flex flex-col space-y-4">
+                
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <button onclick="goToDashboard()" class="p-1.5 bg-slate-950 text-slate-400 hover:text-slate-100 rounded-lg">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        <h2 class="text-lg font-bold">Incentivos Fiscales</h2>
+                    </div>
+                    <span class="px-2.5 py-1 bg-green-500/10 border border-green-500/20 text-green-400 rounded-full text-[11px] font-bold" id="market-balance-badge">
+                        💎 350 PTS
+                    </span>
+                </div>
+
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    Transformación de capital reputacional en beneficios fiscales locales según lo detallado en la propuesta macro del proyecto.
+                </p>
+
+                <div class="space-y-3 flex-1 overflow-y-auto no-scrollbar h-[440px]">
+                    <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800/80 flex flex-col justify-between space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <span class="px-2 py-0.5 bg-green-500/10 text-green-400 text-[9px] font-bold rounded-md uppercase">Arbitrios</span>
+                                <h3 class="text-sm font-semibold text-slate-100">Descuento en Recojo de Residuos</h3>
+                                <p class="text-[10px] text-slate-400">Reducción del costo de arbitrios de limpieza pública del periodo actual.</p>
+                            </div>
+                            <i class="fa-solid fa-percent text-green-400 text-lg"></i>
+                        </div>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs font-extrabold text-green-400">Costo: 200 PTS</span>
+                            <button onclick="redeemReward('Descuento de Arbitrios', 200)" class="px-4 py-2 bg-green-500 hover:bg-green-400 text-slate-950 font-bold rounded-xl text-xs transition-all">
+                                Aplicar Deducción
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800/80 flex flex-col justify-between space-y-3">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <span class="px-2 py-0.5 bg-purple-500/10 text-purple-400 text-[9px] font-bold rounded-md uppercase">Certificación</span>
+                                <h3 class="text-sm font-semibold text-slate-100">Sello de Ciudadano Ambiental</h3>
+                                <p class="text-[10px] text-slate-400">Insignia oficial descargable con validación del Programa EDUCCA.</p>
+                            </div>
+                            <i class="fa-solid fa-medal text-purple-400 text-lg"></i>
+                        </div>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs font-extrabold text-green-400">Costo: 100 PTS</span>
+                            <button onclick="redeemReward('Sello Ciudadano Ambiental', 100)" class="px-4 py-2 bg-green-500 hover:bg-green-400 text-slate-950 font-bold rounded-xl text-xs transition-all">
+                                Reclamar Insignia
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="success-popup" class="hidden absolute inset-x-5 bottom-8 bg-slate-900 border border-green-500/40 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-2xl shadow-black z-30 transition-all duration-300">
+            <span class="w-10 h-10 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center">
+                <i class="fa-solid fa-check text-lg"></i>
+            </span>
+            <p class="text-xs font-bold text-center text-slate-100">Transacción Exitosa</p>
+            <p class="text-[9px] text-center text-slate-400" id="popup-desc">Lógica ejecutada y auditada correctamente.</p>
+        </div>
+
+    </div>
+
+    <div class="mt-4 text-center text-xs text-slate-500 max-w-sm">
+        <p><i class="fa-regular fa-lightbulb mr-1 text-amber-400"></i> <strong>Sustento microeconómico:</strong> Este Frontend simula cómo el registro inmutable destruye la asimetría de información y fomenta la confianza cívica.</p>
+    </div>
+
+    <script>
+        let balance = 350;
+        let userActions = 4;
+
+        function connectWallet() {
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-dashboard').classList.remove('hidden');
+            updateUI();
+        }
+
+        function goToMarket() {
+            document.getElementById('screen-dashboard').classList.add('hidden');
+            document.getElementById('screen-market').classList.remove('hidden');
+            updateUI();
+        }
+
+        function goToDashboard() {
+            document.getElementById('screen-market').classList.add('hidden');
+            document.getElementById('screen-dashboard').classList.remove('hidden');
+            updateUI();
+        }
+
+        function updateUI() {
+            document.getElementById('eco-balance').innerText = balance.toLocaleString();
+            document.getElementById('user-actions').innerText = userActions + " Actividades";
+            document.getElementById('market-balance-badge').innerText = `💎 ${balance.toLocaleString()} PTS`;
+        }
+
+        // Mapeo directo de la función Solidity: `otorgarPuntos()`
+        function simulateOtorgarPuntos() {
+            const select = document.getElementById('activity-select');
+            const activityId = select.value;
+            
+            let pointsEarned = 0;
+            let activityName = "";
+
+            if (activityId === "1") {
+                pointsEarned = 50;
+                activityName = "Entrega de Reciclaje";
+            } else if (activityId === "2") {
+                pointsEarned = 100;
+                activityName = "Campaña Limpieza Playas";
+            } else if (activityId === "3") {
+                pointsEarned = 150;
+                activityName = "Educación Ambiental EDUCCA";
+            }
+
+            balance += pointsEarned;
+            userActions += 1;
+
+            const feed = document.getElementById('ledger-feed');
+            const randomHash = "0x" + Math.random().toString(16).slice(2, 6) + "..." + Math.random().toString(16).slice(2, 4);
+            
+            const newTx = document.createElement('div');
+            newTx.className = "p-2.5 bg-slate-900/60 rounded-xl border border-slate-900 flex justify-between items-center text-xs";
+            newTx.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <span class="p-1.5 bg-green-500/10 text-green-400 rounded-lg">
+                        <i class="fa-solid fa-plus text-[10px]"></i>
+                    </span>
+                    <div>
+                        <p class="font-medium">${activityName}</p>
+                        <p class="text-[9px] text-slate-500">Muni. de Lima · Actividad ID: ${activityId}</p>
+                    </div>
+                </div>
+                <span class="font-bold text-green-400">+${pointsEarned} PTS</span>
+            `;
+            feed.insertBefore(newTx, feed.firstChild);
+
+            updateUI();
+            showPopup(`otorgarPuntos(): +${pointsEarned} PTS agregados vía firma digital.`, true);
+        }
+
+        // Mapeo conceptual de incentivos de descuento
+        function redeemReward(rewardName, cost) {
+            if (balance < cost) {
+                showPopup("Puntos insuficientes en el balance auditado.", false);
+                return;
+            }
+
+            balance -= cost;
+
+            const feed = document.getElementById('ledger-feed');
+            const randomHash = "0x" + Math.random().toString(16).slice(2, 6) + "..." + Math.random().toString(16).slice(2, 4);
+            const newTx = document.createElement('div');
+            newTx.className = "p-2.5 bg-slate-900/60 rounded-xl border border-slate-900 flex justify-between items-center text-xs";
+            newTx.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <span class="p-1.5 bg-rose-500/10 text-rose-400 rounded-lg">
+                        <i class="fa-solid fa-minus text-[10px]"></i>
+                    </span>
+                    <div>
+                        <p class="font-medium">Aplicado: ${rewardName}</p>
+                        <p class="text-[9px] text-slate-500">Deducción Fiscal · Tx: ${randomHash}</p>
+                    </div>
+                </div>
+                <span class="font-bold text-rose-400">-${cost} PTS</span>
+            `;
+            feed.insertBefore(newTx, feed.firstChild);
+
+            updateUI();
+            showPopup(`¡Incentivo "${rewardName}" aplicado con éxito!`, true);
+        }
+
+        function showPopup(text, isSuccess) {
+            const popup = document.getElementById('success-popup');
+            const popupDesc = document.getElementById('popup-desc');
+            popupDesc.innerText = text;
+
+            if (isSuccess) {
+                popup.classList.remove('border-rose-500/40');
+                popup.classList.add('border-green-500/40');
+                popup.querySelector('span').className = "w-10 h-10 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center";
+                popup.querySelector('span').innerHTML = '<i class="fa-solid fa-check text-lg"></i>';
+                popup.querySelectorAll('p')[0].innerText = "Transacción Exitosa";
+            } else {
+                popup.classList.remove('border-green-500/40');
+                popup.classList.add('border-rose-500/40');
+                popup.querySelector('span').className = "w-10 h-10 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center";
+                popup.querySelector('span').innerHTML = '<i class="fa-solid fa-xmark text-lg"></i>';
+                popup.querySelectorAll('p')[0].innerText = "Transacción Rechazada";
+            }
+
+            popup.classList.remove('hidden');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
